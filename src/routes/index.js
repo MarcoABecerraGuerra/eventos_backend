@@ -7,7 +7,7 @@ const router = Router();
 router.post('/usuario/login', async (req, res) =>{
     const { username, pass } = req.body
     let data = await validateLogin(username, pass);
-    res.json(JSON.parse(data.body));
+    res.status(data.statusCode).json(JSON.parse(data.body));
 })
 
 module.exports = router;
