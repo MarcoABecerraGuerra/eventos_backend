@@ -1,5 +1,5 @@
 const { ApiSuccesResponse, ApiInternalErrorResponse } = require("../../utils/api-response");
-const { obtenerEventos, registrarEventos } = require("./evento.service");
+const { obtenerEventos, registrarEventos } = require("./tipo_evento.service");
 
 const getListEvent = async() => {
 
