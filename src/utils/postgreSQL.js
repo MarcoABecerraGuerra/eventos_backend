@@ -5,7 +5,7 @@ const user = 'postgres';
 const pass = '123';
 const host = 'localhost';
 const port = '5432';
-const database = 'postgres';
+const database = 'postgres';//Nombre de base datos
 
 const candena_conexion = `${engine}://${user}:${pass}@${host}:${port}/${database}`;
 
