@@ -1,5 +1,5 @@
 const { ApiSuccesResponse, ApiInternalErrorResponse } = require("../../utils/api-response");
-const { obtenerListaDistrito, registrarNuevoDistrito, actualizar, deleteDistrito } = require("./distrito.service");
+const { obtenerListaDistrito, registrarNuevoDistrito, actualizar, deleteDistrito, obtenerDistrito } = require("./distrito.service");
 
 const getListDistrito = async() => {
 
@@ -18,6 +18,31 @@ const getListDistrito = async() => {
 
     } catch (error) {
         console.info('error al obtener listado', error);
+        return new ApiInternalErrorResponse({
+            message: `Error no controlado: ${error}`,
+            result: 'error',
+            data: []
+        });
+    }
+}
+
+const getDistrito = async(iddistrito) => {
+
+    let response = {};
+
+    try {
+        let distritoObject = await obtenerDistrito(iddistrito);
+        response.message = "Distrito obtenido";
+        response.data = distritoObject;
+        
+        return new ApiSuccesResponse({
+            message: `${response.message}`,
+            result: 'success',
+            data: response.data
+        });
+
+    } catch (error) {
+        console.info('error al obtener distrito', error);
         return new ApiInternalErrorResponse({
             message: `Error no controlado: ${error}`,
             result: 'error',
@@ -109,3 +134,4 @@ module.exports.getListDistrito = getListDistrito;
 module.exports.registrarDistrito = registrarDistrito;
 module.exports.actualizarDistrito = actualizarDistrito;
 module.exports.eliminarDistrito = eliminarDistrito;
+module.exports.getDistrito = getDistrito;

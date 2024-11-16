@@ -11,6 +11,17 @@ const obtenerListaDistrito = async() => {
     return distritos;
 }
 
+const obtenerDistrito = async(param_iddistrito) => {
+    //Realizar query consulta a postgresql
+    let distritos = null;
+    try {
+        distritos = await Distrito.findOne({where:{iddistrito: param_iddistrito}},{raw: true});
+    } catch (error) {
+        console.info('Error al ejecutar consulta', error);
+    }
+    return distritos;
+}
+
 const registrarNuevoDistrito = async(distrito) => {
     //Realizar query consulta a postgresql
     console.log('distrito', distrito)
@@ -49,3 +60,4 @@ module.exports.obtenerListaDistrito = obtenerListaDistrito;
 module.exports.registrarNuevoDistrito = registrarNuevoDistrito;
 module.exports.actualizar = actualizar;
 module.exports.deleteDistrito = deleteDistrito;
+module.exports.obtenerDistrito = obtenerDistrito;
