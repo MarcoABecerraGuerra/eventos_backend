@@ -1,14 +1,15 @@
 const { ApiSuccesResponse, ApiInternalErrorResponse } = require("../../utils/api-response");
-const { obtenerListaTrabajador, registrarNuevoTrabajador, actualizar, deleteTrabajador } = require("./trabajador.service");
+const { enviarCorreo } = require("../../utils/envioCorreo");
+const { obtenerListaCliente, registrarNuevoCliente, actualizar, deleteCliente } = require("./cliente.service");
 
-const getListTrabajador = async() => {
+const getListCliente = async() => {
 
     let response = {};
 
     try {
-        let trabajadorLista = await obtenerListaTrabajador();
-        response.message = "Lista de trabajadores obtenida";
-        response.data = trabajadorLista;
+        let clienteLista = await obtenerListaCliente();
+        response.message = "Lista de clientes obtenida";
+        response.data = clienteLista;
         
         return new ApiSuccesResponse({
             message: `${response.message}`,
@@ -26,16 +27,17 @@ const getListTrabajador = async() => {
     }
 }
 
-const registrarTrabajador = async(trabajador) => {
+const registrarCliente = async(cliente) => {
 
     let response = {};
 
     try {
-        let trabajadorLista = await registrarNuevoTrabajador(trabajador);
-        response.message = "Trabajador Registrado";
-        console.info('Evento registrado', JSON.stringify(trabajadorLista));
+        let clienteLista = await registrarNuevoCliente(cliente);
+        response.message = "Cliente Registrado";
+        console.info('Evento registrado', JSON.stringify(clienteLista));
 
-        if (trabajadorLista != null) {
+        if (clienteLista != null) {
+            await enviarCorreo();
             return new ApiSuccesResponse({
                 message: `${response.message}`,
                 result: 'success'
@@ -57,15 +59,15 @@ const registrarTrabajador = async(trabajador) => {
     }
 }
 
-const actualizarTrabajador = async(trabajador) => {
+const actualizarCliente = async(cliente) => {
 
     let response = {};
 
     try {
-        console.info('trabajador', JSON.stringify(trabajador));
-        let trabajadorLista = await actualizar(trabajador);
+        console.info('cliente', JSON.stringify(cliente));
+        let clienteLista = await actualizar(cliente);
         response.message = "Distrito Registrado";
-        console.info('Evento registrado', JSON.stringify(trabajadorLista));
+        console.info('Evento registrado', JSON.stringify(clienteLista));
 
         return new ApiSuccesResponse({
             message: `${response.message}`,
@@ -81,15 +83,15 @@ const actualizarTrabajador = async(trabajador) => {
     }
 }
 
-const eliminarTrabajador = async(idtrabajador) => {
+const eliminarCliente = async(idcliente) => {
 
     let response = {};
 
     try {
-        console.info('trabajador registrado', idtrabajador);
-        let trabajadorLista = await deleteTrabajador(idtrabajador);
-        response.message = "Trabajador Eliminado";
-        console.info('Evento registrado', JSON.stringify(trabajadorLista));
+        console.info('cliente registrado', idcliente);
+        let clienteLista = await deleteCliente(idcliente);
+        response.message = "cliente Eliminado";
+        console.info('Evento registrado', JSON.stringify(clienteLista));
 
         return new ApiSuccesResponse({
             message: `${response.message}`,
@@ -105,7 +107,7 @@ const eliminarTrabajador = async(idtrabajador) => {
     }
 }
 
-module.exports.getListTrabajador = getListTrabajador;
-module.exports.registrarTrabajador = registrarTrabajador;
-module.exports.actualizarTrabajador = actualizarTrabajador;
-module.exports.eliminarTrabajador = eliminarTrabajador;
+module.exports.getListCliente = getListCliente;
+module.exports.registrarCliente = registrarCliente;
+module.exports.actualizarCliente = actualizarCliente;
+module.exports.eliminarCliente = eliminarCliente;

@@ -12,6 +12,7 @@
     "bcrypt": "^5.1.1",
     "express": "^4.21.1",
     "moment-timezone": "^0.5.46",
+    "nodemailer": "^6.9.16",
     "pg": "^8.13.0",
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.37.4"

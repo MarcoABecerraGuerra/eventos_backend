@@ -56,11 +56,11 @@ const registrarDistrito = async(distrito) => {
     let response = {};
 
     try {
-        let distritoLista = await registrarNuevoDistrito(distrito);
+        let distritoRegistrado = await registrarNuevoDistrito(distrito);
         response.message = "Distrito Registrado";
-        console.info('Evento registrado', JSON.stringify(distritoLista));
+        console.info('Evento registrado', JSON.stringify(distritoRegistrado));
 
-        if (distritoLista != null) {
+        if (distritoRegistrado != null) {
             return new ApiSuccesResponse({
                 message: `${response.message}`,
                 result: 'success'
