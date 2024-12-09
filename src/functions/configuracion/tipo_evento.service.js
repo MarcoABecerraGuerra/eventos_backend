@@ -24,9 +24,10 @@ const registrarEventos = async(evento) => {
 
 const actualizarEvento = async(eventoUpd) => {
     //Realizar query consulta a postgresql
+    console.log('eventoUpd', eventoUpd);
     let evento = null;
     try {
-        evento = await TipoEvento.update(eventoUpd, { where: { idtipo_evento: evento.idtipo_evento} });
+        evento = await TipoEvento.update(eventoUpd, { where: { idtipo_evento: eventoUpd.idtipo_evento} });
     } catch (error) {
         console.info('Error al ejecutar registro', error);
     }
