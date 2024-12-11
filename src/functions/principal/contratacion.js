@@ -1,5 +1,7 @@
 const { ApiSuccesResponse, ApiInternalErrorResponse } = require("../../utils/api-response");
+const { saveLogProcess } = require("../../utils/logProcess");
 const { obtenerListaContratacion, registrarNuevoContratacion, actualizar, deleteContratacion } = require("./contratacion.service");
+const model = 'CONTRATACION';
 
 const getListContratacion = async() => {
 
@@ -18,6 +20,7 @@ const getListContratacion = async() => {
 
     } catch (error) {
         console.info('error al obtener listado', error);
+        saveLogProcess(model, '', JSON.stringify(error), 'GETLIST');
         return new ApiInternalErrorResponse({
             message: `Error no controlado: ${error}`,
             result: 'error',
@@ -36,6 +39,7 @@ const registrarContratacion = async(contratacion) => {
         console.info('Evento registrado', JSON.stringify(contratacionLista));
 
         if (contratacionLista != null) {
+            await enviarCorreo();
             return new ApiSuccesResponse({
                 message: `${response.message}`,
                 result: 'success'
@@ -50,6 +54,7 @@ const registrarContratacion = async(contratacion) => {
 
     } catch (error) {
         console.info('error al obtener listado', error);
+        saveLogProcess(model, JSON.stringify(contratacion), JSON.stringify(error), 'CREATE');
         return new ApiInternalErrorResponse({
             message: `Error no controlado: ${error}`,
             result: 'error'
@@ -64,7 +69,7 @@ const actualizarContratacion = async(contratacion) => {
     try {
         console.info('contratacion', JSON.stringify(contratacion));
         let contratacionLista = await actualizar(contratacion);
-        response.message = "Distrito Registrado";
+        response.message = "Contratacion Registrado";
         console.info('Evento registrado', JSON.stringify(contratacionLista));
 
         return new ApiSuccesResponse({
@@ -74,6 +79,7 @@ const actualizarContratacion = async(contratacion) => {
 
     } catch (error) {
         console.info('error al obtener listado', error);
+        saveLogProcess(model, JSON.stringify(contratacion), JSON.stringify(error), 'UPDATE');
         return new ApiInternalErrorResponse({
             message: `Error no controlado: ${error}`,
             result: 'error'
@@ -98,6 +104,7 @@ const eliminarContratacion = async(idcontratacion) => {
 
     } catch (error) {
         console.info('error al obtener listado', error);
+        saveLogProcess(model, idcontratacion, JSON.stringify(error), 'DELETE');
         return new ApiInternalErrorResponse({
             message: `Error no controlado: ${error}`,
             result: 'error'

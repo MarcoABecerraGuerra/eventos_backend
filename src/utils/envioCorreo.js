@@ -17,9 +17,9 @@ const transporter = nodeMailer.createTransport({
 let mail = {
     from: MAIL_CREDENTIALS.remitente,
     to: "hawavi6871@cpaurl.com",
-    subject: "NUEVO CLIENTE",
+    subject: "NUEVA CONTRATACION",
     text: "RESERVA",
-    html: `<h5>UN NUEVO CLIENTE HA SIDO REGISTRADO</h5>`
+    html: `<h5>SE HA GENERADO UNA NUEVA CONTRATACION</h5>`
 }
 
 const enviarCorreo = async() =>{

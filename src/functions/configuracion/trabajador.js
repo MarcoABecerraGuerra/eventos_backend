@@ -1,5 +1,6 @@
 const { ApiSuccesResponse, ApiInternalErrorResponse } = require("../../utils/api-response");
 const { obtenerListaTrabajador, registrarNuevoTrabajador, actualizar, deleteTrabajador } = require("./trabajador.service");
+const model = 'TRABAJADOR';
 
 const getListTrabajador = async() => {
 
@@ -18,6 +19,7 @@ const getListTrabajador = async() => {
 
     } catch (error) {
         console.info('error al obtener listado', error);
+        await saveLogProcess(model, '', JSON.stringify(error), 'GETLIST');
         return new ApiInternalErrorResponse({
             message: `Error no controlado: ${error}`,
             result: 'error',
@@ -50,6 +52,7 @@ const registrarTrabajador = async(trabajador) => {
 
     } catch (error) {
         console.info('error al obtener listado', error);
+        await saveLogProcess(model, JSON.stringify(trabajador), JSON.stringify(error), 'CREATE');
         return new ApiInternalErrorResponse({
             message: `Error no controlado: ${error}`,
             result: 'error'
@@ -74,6 +77,7 @@ const actualizarTrabajador = async(trabajador) => {
 
     } catch (error) {
         console.info('error al obtener listado', error);
+        await saveLogProcess(model, JSON.stringify(trabajador), JSON.stringify(error), 'UPDATE');
         return new ApiInternalErrorResponse({
             message: `Error no controlado: ${error}`,
             result: 'error'
@@ -98,6 +102,7 @@ const eliminarTrabajador = async(idtrabajador) => {
 
     } catch (error) {
         console.info('error al obtener listado', error);
+        await saveLogProcess(model, idtrabajador, JSON.stringify(error), 'DELETE');
         return new ApiInternalErrorResponse({
             message: `Error no controlado: ${error}`,
             result: 'error'

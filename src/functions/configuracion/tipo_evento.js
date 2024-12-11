@@ -1,5 +1,7 @@
 const { ApiSuccesResponse, ApiInternalErrorResponse } = require("../../utils/api-response");
+const { saveLogProcess } = require("../../utils/logProcess");
 const { obtenerEventos, registrarEventos, actualizarEvento, deleteEvento } = require("./tipo_evento.service");
+const model = 'TIPO_EVENTO'
 
 const getListEvent = async() => {
 
@@ -18,6 +20,7 @@ const getListEvent = async() => {
 
     } catch (error) {
         console.info('error al obtener listado', error);
+        await saveLogProcess(model, '', JSON.stringify(error), 'GETLIST');
         return new ApiInternalErrorResponse({
             message: `Error no controlado: ${error}`,
             result: 'error',
@@ -42,6 +45,7 @@ const saveEvent = async(evento) => {
 
     } catch (error) {
         console.info('error al obtener listado', error);
+        await saveLogProcess(model, JSON.stringify(evento), JSON.stringify(error), 'CREATE');
         return new ApiInternalErrorResponse({
             message: `Error no controlado: ${error}`,
             result: 'error'
@@ -65,6 +69,7 @@ const updateEvento = async(distrito) => {
 
     } catch (error) {
         console.info('error al obtener listado', error);
+        await saveLogProcess(model, JSON.stringify(distrito), JSON.stringify(error), 'UPDATE');
         return new ApiInternalErrorResponse({
             message: `Error no controlado: ${error}`,
             result: 'error'
@@ -88,6 +93,7 @@ const eliminarEvento = async(idtipo_evento) => {
 
     } catch (error) {
         console.info('error al obtener listado', error);
+        await saveLogProcess(model, idtipo_evento, JSON.stringify(error), 'DELETE');
         return new ApiInternalErrorResponse({
             message: `Error no controlado: ${error}`,
             result: 'error'

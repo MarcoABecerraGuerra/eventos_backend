@@ -1,6 +1,7 @@
 const { ApiSuccesResponse, ApiInternalErrorResponse } = require("../../utils/api-response");
-const { enviarCorreo } = require("../../utils/envioCorreo");
+const { saveLogProcess } = require("../../utils/logProcess");
 const { obtenerListaCliente, registrarNuevoCliente, actualizar, deleteCliente } = require("./cliente.service");
+const model = 'CLIENTE';
 
 const getListCliente = async() => {
 
@@ -19,6 +20,7 @@ const getListCliente = async() => {
 
     } catch (error) {
         console.info('error al obtener listado', error);
+        await saveLogProcess(model, '', JSON.stringify(error), 'GETLIST');
         return new ApiInternalErrorResponse({
             message: `Error no controlado: ${error}`,
             result: 'error',
@@ -37,7 +39,6 @@ const registrarCliente = async(cliente) => {
         console.info('Evento registrado', JSON.stringify(clienteLista));
 
         if (clienteLista != null) {
-            await enviarCorreo();
             return new ApiSuccesResponse({
                 message: `${response.message}`,
                 result: 'success'
@@ -52,6 +53,7 @@ const registrarCliente = async(cliente) => {
 
     } catch (error) {
         console.info('error al obtener listado', error);
+        await saveLogProcess(model, JSON.stringify(cliente), JSON.stringify(error), 'CREATE');
         return new ApiInternalErrorResponse({
             message: `Error no controlado: ${error}`,
             result: 'error'
@@ -76,6 +78,7 @@ const actualizarCliente = async(cliente) => {
 
     } catch (error) {
         console.info('error al obtener listado', error);
+        await saveLogProcess(model, JSON.stringify(cliente), JSON.stringify(error), 'UPDATE');
         return new ApiInternalErrorResponse({
             message: `Error no controlado: ${error}`,
             result: 'error'
@@ -100,6 +103,7 @@ const eliminarCliente = async(idcliente) => {
 
     } catch (error) {
         console.info('error al obtener listado', error);
+        await saveLogProcess(model, idcliente, JSON.stringify(error), 'DELETE');
         return new ApiInternalErrorResponse({
             message: `Error no controlado: ${error}`,
             result: 'error'
