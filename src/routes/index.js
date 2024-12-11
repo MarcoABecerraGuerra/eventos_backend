@@ -6,6 +6,7 @@ const { getListCliente, registrarCliente, actualizarCliente, eliminarCliente } =
 const { getListTrabajador, registrarTrabajador, actualizarTrabajador, eliminarTrabajador } = require('../functions/configuracion/trabajador');
 const { getListEvent, updateEvento, saveEvent, eliminarEvento } = require('../functions/configuracion/tipo_evento');
 const { getEventoXMes } = require('../functions/principal/dashboard');
+const { getListContratacion, registrarContratacion, actualizarContratacion, eliminarContratacion } = require('../functions/principal/contratacion');
 
 const router = Router();
 
@@ -129,6 +130,31 @@ router.put('/tipo-evento/editar', async (req, res) =>{
 router.delete('/tipo-evento/eliminar', async (req, res) =>{
     const { idtipo_evento } = req.query
     let data = await eliminarEvento(idtipo_evento);
+    res.status(data.statusCode).json(JSON.parse(data.body));
+})
+
+// **********************
+// CONTRATACION SERVICES
+// **********************
+
+router.get('/contratacion', async (req, res) =>{
+    let data = await getListContratacion();
+    res.status(data.statusCode).json(JSON.parse(data.body));
+})
+
+router.post('/contratacion/crear', async (req, res) =>{
+    let data = await registrarContratacion(req.body);
+    res.status(data.statusCode).json(JSON.parse(data.body));
+})
+
+router.put('/contratacion/editar', async (req, res) =>{
+    let data = await actualizarContratacion(req.body);
+    res.status(data.statusCode).json(JSON.parse(data.body));
+})
+
+router.delete('/contratacion/eliminar', async (req, res) =>{
+    const { idcontratacion } = req.query
+    let data = await eliminarContratacion(idcontratacion);
     res.status(data.statusCode).json(JSON.parse(data.body));
 })
 

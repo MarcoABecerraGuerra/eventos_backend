@@ -1,5 +1,10 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../utils/postgreSQL');
+const { Cliente } = require('./cliente');
+const { Trabajador } = require('./trabajador');
+const { TipoEvento } = require('./tipo-evento');
+const { Distrito } = require('./distrito');
+const { Estado } = require('./estado');
 
 const Contratacion = sequelize.define('contratacion', {
     idcontratacion: {
@@ -34,5 +39,11 @@ const Contratacion = sequelize.define('contratacion', {
     tableName: 'contratacion', // Nombre de la tabla personalizada
     timestamps: false
 });
+
+Contratacion.belongsTo(Cliente, { foreignKey: "idcliente" });
+Contratacion.belongsTo(Trabajador, { foreignKey: "idtrabajador" });
+Contratacion.belongsTo(TipoEvento, { foreignKey: "idtipo_evento" });
+Contratacion.belongsTo(Distrito, { foreignKey: "iddistrito" });
+Contratacion.belongsTo(Estado, { foreignKey: "idestado" });
 
 module.exports.Contratacion = Contratacion;
